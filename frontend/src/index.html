@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <!-- <script src="./bootstrap-5.0.2-dist/js/bootstrap.js" /> -->
+  <!-- <script defer src="./main.js"/> -->
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">QNA SYSTEM</a>
+
+    </div>
+  </nav>
+  <div id="main" class="p-5 mt-5">
+    <form>
+      <label for="" class="form-label">Enter your question</label>
+      <div class="d-flex">
+        <input class="form-control me-3" id="question-text">
+        <button class="btn btn-primary" id="submit-button">Submit</button>
+      </div>
+      <div id="output-container" class="border mt-5 p-3">
+        the answer will be displayed here
+        <!--  -->
+      </div>
+    </form>
+  </div>
+  <script>
+    let main = document.getElementById("main");
+
+
+    let textInput = document.getElementById("question-text");
+    let outputContainer = document.getElementById("output-container");
+
+    let submitButton = document.getElementById("submit-button");
+    submitButton.addEventListener("click", async (e) => {
+      e.preventDefault();
+      let questionText = textInput.value;
+      outputContainer.innerText = "please wait while we find an answer to your query";
+      let res = await fetch("http://127.0.0.1:5000/query/" + questionText);
+      let data = await res.json();
+      let answer = data.answer;
+      outputContainer.innerText = answer;
+    })
+    console.log(submitButton)
+  </script>
+</body>
+
+</html>
